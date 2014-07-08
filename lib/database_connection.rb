@@ -11,6 +11,10 @@ class DatabaseConnection
     @connection = establish_connection
   end
 
+  # def suffix
+  #   first["total"].to_f
+  # end
+
   def sql(sql_string)
     connection.execute(sql_string).to_a
   end
