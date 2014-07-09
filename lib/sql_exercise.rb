@@ -75,20 +75,21 @@ class SqlExercise
     WHERE orders.customer_id = #{customer_id}
     BLAH
 
-    database_connection.sql(string).map { |item| item["name"]}
+    database_connection.sql(string).map { |item| item["name"] }
   end
 
   def customers_that_bought_item(item)
     string = <<-BLAH
-      SELECT
-    customers.name,
-    customers.id
-    FROM
-    customers
-    JOIN orders ON customers .id = orders.customer_id
-    JOIN orderitems ON orders .id = orderitems.order_id
-    JOIN items ON items .id = orderitems.item_id
-    WHERE items.name = bike01
+    SELECT
+customers.name customer_name,
+customers.id
+FROM
+items
+JOIN orderitems ON items .id = orderitems.item_id
+JOIN orders ON orderitems .order_id = orders.id
+JOIN customers ON orders .customer_id=customers.id
+WHERE items.name='#{item}'
+GROUP BY customers.id
     BLAH
 
     database_connection.sql(string)
