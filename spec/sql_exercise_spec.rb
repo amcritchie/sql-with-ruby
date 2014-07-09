@@ -245,7 +245,6 @@ describe SqlExercise do
 
   describe "#customers_that_bought_item_in_state" do
     it "returns the first customer that bought 'bike03' that lives in Maine" do
-      skip
       expected_user = {
         "id" => "9",
         "name" => "Wilhelmine Huels",

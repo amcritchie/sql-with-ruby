@@ -81,19 +81,38 @@ class SqlExercise
   def customers_that_bought_item(item)
     string = <<-BLAH
     SELECT
-customers.name customer_name,
-customers.id
-FROM
-items
-JOIN orderitems ON items .id = orderitems.item_id
-JOIN orders ON orderitems .order_id = orders.id
-JOIN customers ON orders .customer_id=customers.id
-WHERE items.name='#{item}'
-GROUP BY customers.id
+    customers.name customer_name,
+    customers.id
+    FROM
+    items
+    JOIN orderitems ON items .id = orderitems.item_id
+    JOIN orders ON orderitems .order_id = orders.id
+    JOIN customers ON orders .customer_id=customers.id
+    WHERE items.name='#{item}'
+    GROUP BY customers.id
     BLAH
-
     database_connection.sql(string)
+  end
 
+  def customers_that_bought_item_in_state(item, state)
+    string = <<-BLAH
+    SELECT
+    customers.id,
+    customers.name,
+    customers.email,
+    customers.address,
+    customers.city,
+    customers.state,
+    customers.zipcode
+    FROM
+    items
+    JOIN orderitems ON items .id = orderitems.item_id
+    JOIN orders ON orderitems .order_id = orders.id
+    JOIN customers ON orders .customer_id=customers.id
+    WHERE items.name='bike01' AND customers.state='Maine'
+    GROUP BY customers.id
+    BLAH
+    database_connection.sql(string).first
   end
 
 end
